@@ -4,33 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-</head>
-
-<body>
     <script src="token/token.js"></script>
     <script src="token/tokenLv1.js"></script>
     <script src="token/tokenLv2.js"></script>
     <script src="parser/parser.js"></script>
     <script src="parser/process.js"></script>
+    <script src="runner/runner.js"></script>
+</head>
+
+<body>
     <script>
-        // const string = 'func x0 x1 x2 x3 x4 = * x0 (+ (- x1 x2) (- x3 x4))';
-        // const string = 'func x0 x1 = + x0 x1';
-        const string = 'func = 10';
-        console.log(TokenLv1);
-        const tokenLv1 = TokenLv1.expandFromString(string);
-        const tokenLv2 = tokenLv1.expand();
-        const tokenLv3 = tokenLv2.expand();
-        console.log(tokenLv1);
-        console.log(tokenLv2);
-        console.log(tokenLv3);
-        const script = generateScript(tokenLv2);
-        console.log(script);
-        console.log(eval(script));
-        console.log('input: ' + string);
-        console.log('code: ' + script);
-        console.log('output: ' + func());
-
-
+        const defun = 'func a b c = (+ a (- b c))\nmain = func 6 2 1';
+        const scripts = loadScript(defun);
+        eval(scripts);
+        console.log(scripts);
+        const result = main();
+        console.log(result);
     </script>
 </body>
 
