@@ -19,6 +19,9 @@ const definitionOfFunc = (beforeEqualToken) => {
 
     let funcDefinition = 'var ' + funcIdentifier + ' = ';
     beforeEqualToken.shift();
+    if (beforeEqualToken.length == 0) {
+        funcDefinition += '() => ';
+    }
     for (const identifier of beforeEqualToken) {
         funcDefinition += identifier + ' => ';
     }
@@ -92,9 +95,6 @@ const expandListProcessor = (afterEqual) => {
     for (let identifier of afterEqual) {
         process += ' ( ' + identifier + ' )';
 
-    }
-    if (afterEqual.length == 0) {
-        process += ' ()';
     }
     return process;
 }
