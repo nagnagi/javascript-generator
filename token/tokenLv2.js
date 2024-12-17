@@ -10,7 +10,7 @@ class TokenLv2 extends Token {
      * @returns {Array<String>}
      */
     expand() {
-        const newTokenList = new Array();
+        const newTokenList = new Array(); 
         for (const token of this.tokenList) {
             for (const char of token.split('')) {
                 newTokenList.push(char);

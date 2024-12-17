@@ -10,6 +10,7 @@
     <script src="token/token.js"></script>
     <script src="token/tokenLv1.js"></script>
     <script src="token/tokenLv2.js"></script>
+    <script src="parser/parser.js"></script>
     <script>
         const string = 'func x0 x1 x2 = * x0 (+ x1 x2)';
         console.log(TokenLv1);
@@ -19,6 +20,8 @@
         console.log(tokenLv1);
         console.log(tokenLv2);
         console.log(tokenLv3);
+        const script = generateScript(tokenLv2);
+        console.log(script);
     </script>
 </body>
 
