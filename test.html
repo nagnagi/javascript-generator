@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="token/token.js"></script>
+    <script src="token/tokenLv1.js"></script>
+    <script src="token/tokenLv2.js"></script>
+    <script>
+        const string = 'func x0 x1 x2 = * x0 (+ x1 x2)';
+        console.log(TokenLv1);
+        const tokenLv1 = TokenLv1.expandFromString(string);
+        const tokenLv2 = tokenLv1.expand();
+        const tokenLv3 = tokenLv2.expand();
+        console.log(tokenLv1);
+        console.log(tokenLv2);
+        console.log(tokenLv3);
+    </script>
+</body>
+
+</html>
