@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>趣味のポータルサイト</title>
+    <script src="./script/token/token.js"></script>
+    <script src="./script/token/tokenLv1.js"></script>
+    <script src="./script/token/tokenLv2.js"></script>
+    <script src="./script/parser/parser.js"></script>
+    <script src="./script/parser/process.js"></script>
+    <script src="./script/runner/runner.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Noto+Sans+JP:wght@100..900&family=Zen+Old+Mincho:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        #code {
+            font-family: 'Inconsolata', serif;
+            font-size: large;
+        }
+        #code-space {
+            font-family: 'Inconsolata', serif;
+            white-space: pre-wrap;
+            word-wrap:break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header">
+        <h1>趣味</h1>
+    </div>
+    <div id="editor">
+        <h2>エディタ</h2>
+        <form action="./index.html" method="post" id="form" >
+            <p>コードを記述</p>
+<textarea name="code" id="code" cols="60" rows="20">func a b c = (+ a (- b c))
+main = func 6 2 1</textarea>
+            <button type="submit">送信</button>
+        </form>
+    </div>
+    <div id="result">
+        <h2>生成されたコード</h2>
+        <p id="code-space"></p>
+        <h2>実行結果</h2>
+        <p id="result-space"></p>
+    </div>
+    <script>
+        const form = document.getElementById("form")
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const code = form.elements.code.value;
+            console.log(code);
+            const scripts = loadScript(code);
+            document.getElementById('code-space').textContent = scripts;
+            eval(scripts);
+            console.log(scripts);
+            const result = main();
+            document.getElementById('result-space').textContent = result;
+            console.log(result);
+        });
+    </script>
+</body>
+
+</html>
