@@ -63,8 +63,9 @@ const replaceLambda = (afterEqualToken) => {
 
 /**
  * @param {Array<String>} afterEqual
+ * @returns {String}
  */
-const expandListProcesser = (afterEqual) => {
+const expandListProcessor = (afterEqual) => {
     let func = afterEqual[0];
     switch (func) {
     case '+':
@@ -95,8 +96,39 @@ const expandListProcesser = (afterEqual) => {
     if (afterEqual.length == 0) {
         process += ' ()';
     }
-    process += ';';
     return process;
+}
+
+/**
+ * @param {Array<T>} lambdaList
+ * @param {String} process
+ */
+const expandLambda = (lambdaList, process) => {
+    let tokenList = TokenLv1.expandFromString(process).expand().getTokenList();
+    console.log(tokenList)
+    const lastLambda = lambdaList[lambdaList.length - 1];
+    console.log(lastLambda);
+    for (let i = 0; i < tokenList.length; ++i) {
+        if (tokenList[i] == lastLambda.name) {
+            const process = expandListProcessor(lastLambda.token);
+            console.log(process);
+            const before = tokenList.slice(0, i);
+            const after  = tokenList.slice(i + 1 , tokenList.length);
+            tokenList = before.concat(process).concat(after);
+            console.log(tokenList);
+            break;
+        }
+    }
+    lambdaList.pop();
+    let newProcess = '';
+    for (let i = 0; i < tokenList.length - 1; ++i) {
+        newProcess += tokenList[i] + ' ';
+    }
+    newProcess += tokenList[tokenList.length - 1];
+    return {
+        newProcess: newProcess,
+        lastLambda: lastLambda
+    };
 }
 
 /**
@@ -107,17 +139,19 @@ const processOfFunc = (afterEqualToken) => {
     const {newAfterEqual, lambdaList} = replaceLambda(afterEqualToken);
     console.log(lambdaList);
     console.log(newAfterEqual);
-    const process = expandListProcesser(newAfterEqual);
+    const process = expandListProcessor(newAfterEqual);
+    let newProcess = expandLambda(lambdaList, process);
+    console.log(newProcess);
     return process;
 }
 
 /**
- * @param {TokenLv2} token\
+ * @param {TokenLv2} token
  * @returns {String}
  */
 const generateScript = (token) => {
     const {beforeEqual, afterEqual} = sliceAtEqual(token);
     const def = definitionOfFunc(beforeEqual);
     const process = processOfFunc(afterEqual);
-    return def + process;
+    return def + process + ';';
 };
