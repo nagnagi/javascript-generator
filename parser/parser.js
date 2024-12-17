@@ -90,7 +90,7 @@ const expandListProcessor = (afterEqual) => {
     afterEqual.shift();
     let process = func;
     for (let identifier of afterEqual) {
-        process += ' (' + identifier + ')';
+        process += ' ( ' + identifier + ' )';
 
     }
     if (afterEqual.length == 0) {
@@ -127,7 +127,7 @@ const expandLambda = (lambdaList, process) => {
     newProcess += tokenList[tokenList.length - 1];
     return {
         newProcess: newProcess,
-        lastLambda: lastLambda
+        newLambdaList: lambdaList
     };
 }
 
@@ -136,12 +136,15 @@ const expandLambda = (lambdaList, process) => {
  * @returns {String}
  */
 const processOfFunc = (afterEqualToken) => {
-    const {newAfterEqual, lambdaList} = replaceLambda(afterEqualToken);
+    let {newAfterEqual, lambdaList} = replaceLambda(afterEqualToken);
     console.log(lambdaList);
     console.log(newAfterEqual);
-    const process = expandListProcessor(newAfterEqual);
-    let newProcess = expandLambda(lambdaList, process);
-    console.log(newProcess);
+    let process = expandListProcessor(newAfterEqual);
+    while (lambdaList.length) {
+        const {newProcess, newLambdaList} = expandLambda(lambdaList, process);
+        lambdaList = newLambdaList;
+        process = newProcess;
+    }
     return process;
 }
 
