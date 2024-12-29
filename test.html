@@ -4,17 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script src="token/token.js"></script>
-    <script src="token/tokenLv1.js"></script>
-    <script src="token/tokenLv2.js"></script>
-    <script src="parser/parser.js"></script>
-    <script src="parser/process.js"></script>
-    <script src="runner/runner.js"></script>
+    <script src="./script/token/token.js"></script>
+    <script src="./script/token/tokenLv1.js"></script>
+    <script src="./script/token/tokenLv2.js"></script>
+    <script src="./script/parser/parser.js"></script>
+    <script src="./script/parser/process.js"></script>
+    <script src="./script/runner/runner.js"></script>
 </head>
 
 <body>
     <script>
-        const defun = 'func a b c = (+ a (- b c))\nmain = func 6 2 1';
+        const defun = 'func a b c = (? a (+ b c) (- b c))\nmain = func 1 2 3';
         const scripts = loadScript(defun);
         eval(scripts);
         console.log(scripts);
