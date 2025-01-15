@@ -1,6 +1,6 @@
 /**
  * @param {TokenLv2} token
- * @returns {{String: String, String: String}}
+ * @returns {{beforeEqual: Array<String>, afterEqual: Array<String>}}
  */
 const sliceAtEqual = (token) => {
     const tokenList = token.getTokenList();
@@ -8,25 +8,6 @@ const sliceAtEqual = (token) => {
         beforeEqual: tokenList.slice(0, tokenList.indexOf('=')),
         afterEqual: tokenList.slice(tokenList.indexOf('=') + 1, tokenList.length)
     };
-}
-
-/**
- * @param {Array<String>} beforeEqualToken
- * @returns {String}
- */
-const definitionOfFunc = (beforeEqualToken) => {
-    const funcIdentifier = beforeEqualToken[0];
-
-    let funcDefinition = 'var ' + funcIdentifier + ' = ';
-    beforeEqualToken.shift();
-    if (beforeEqualToken.length == 0) {
-        funcDefinition += '() => ';
-    }
-    for (const identifier of beforeEqualToken) {
-        funcDefinition += identifier + ' => ';
-    }
-
-    return funcDefinition;
 }
 
 /**
@@ -129,6 +110,25 @@ const expandLambda = (lambdaList, process) => {
         newProcess: newProcess,
         newLambdaList: lambdaList
     };
+}
+
+/**
+ * @param {Array<String>} beforeEqualToken
+ * @returns {String}
+ */
+const definitionOfFunc = (beforeEqualToken) => {
+    const funcIdentifier = beforeEqualToken[0];
+
+    let funcDefinition = 'var ' + funcIdentifier + ' = ';
+    beforeEqualToken.shift();
+    if (beforeEqualToken.length == 0) {
+        funcDefinition += '() => ';
+    }
+    for (const identifier of beforeEqualToken) {
+        funcDefinition += identifier + ' => ';
+    }
+
+    return funcDefinition;
 }
 
 /**
